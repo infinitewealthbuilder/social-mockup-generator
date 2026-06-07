@@ -122,6 +122,26 @@ export default function HomePage() {
         </p>
       </section>
 
+      {/* Active Campaign Storyboard CTA */}
+      <section className="mt-4">
+        <Link href="/storyboard/q1031-june" className="block">
+          <div className="group relative overflow-hidden rounded-2xl border border-[#D9B01C]/40 bg-gradient-to-r from-[#1f1f1f] to-[#373a36] p-6 shadow-sm transition-all hover:shadow-lg">
+            <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+              <div>
+                <span className="mb-1 inline-block rounded-full bg-[#D9B01C]/20 px-2.5 py-0.5 text-xs font-semibold text-[#D9B01C]">
+                  Campaign Storyboard
+                </span>
+                <h3 className="text-xl font-bold text-white">Q-1031 — June 2026 Organic (Facebook)</h3>
+                <p className="mt-1 text-sm text-gray-300">
+                  10 posts on a timeline · click any post to edit the copy and save. Jun 8–30.
+                </p>
+              </div>
+              <Button className="bg-[#D9B01C] text-[#1f1f1f] hover:bg-[#C49F18]">Open Storyboard →</Button>
+            </div>
+          </div>
+        </Link>
+      </section>
+
       {/* Platform Selection */}
       <section className="mt-8">
         <h2 className="mb-6 text-xl sm:text-2xl font-semibold text-gray-800">

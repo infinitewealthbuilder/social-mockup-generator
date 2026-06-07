@@ -131,9 +131,9 @@ export default function HomePage() {
                 <span className="mb-1 inline-block rounded-full bg-[#D9B01C]/20 px-2.5 py-0.5 text-xs font-semibold text-[#D9B01C]">
                   Campaign Storyboard
                 </span>
-                <h3 className="text-xl font-bold text-white">Q-1031 — June 2026 Organic (Facebook)</h3>
+                <h3 className="text-xl font-bold text-white">Q-1031 — June 2026 Organic</h3>
                 <p className="mt-1 text-sm text-gray-300">
-                  10 posts on a timeline · click any post to edit the copy and save. Jun 8–30.
+                  51 posts across LinkedIn · Facebook · Instagram · X — filter by platform, click any post to edit &amp; save. Jun 8–30.
                 </p>
               </div>
               <Button className="bg-[#D9B01C] text-[#1f1f1f] hover:bg-[#C49F18]">Open Storyboard →</Button>

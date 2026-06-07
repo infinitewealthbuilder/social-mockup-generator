@@ -3,8 +3,17 @@
 import { forwardRef, useState, useEffect } from 'react'
 import { usePostStore } from '@/hooks/usePostStore'
 import { formatNumber, getRelativeTime, encodeColorForSvg } from '@/lib/utils'
+import { DEFAULT_AUTHOR, DEFAULT_METRICS } from '@/lib/types'
+import type { Theme, PostAuthor, PostMetrics, PostImage } from '@/lib/types'
 
 interface InstagramPostProps {
+  theme?: Theme
+  author?: PostAuthor
+  content?: string
+  timestamp?: Date
+  metrics?: PostMetrics
+  images?: PostImage[]
+  editable?: boolean
   className?: string
 }
 
@@ -65,7 +74,7 @@ const PlaceholderIcon = ({ color = '#8E8E8E' }: { color?: string }) =>
   createIgIcon(IG_ICONS.placeholder(encodeColor(color)), 'w-12 h-12 mb-3')
 
 export const InstagramPost = forwardRef<HTMLDivElement, InstagramPostProps>(
-  ({ className = '' }, ref) => {
+  (props, ref) => {
     const [mounted, setMounted] = useState(false)
     const store = usePostStore()
 
@@ -73,15 +82,14 @@ export const InstagramPost = forwardRef<HTMLDivElement, InstagramPostProps>(
       setMounted(true)
     }, [])
 
-    if (!mounted) {
-      return (
-        <div className="w-[468px] bg-white rounded-lg animate-pulse">
-          <div className="h-[600px] bg-gray-200" />
-        </div>
-      )
-    }
-
-    const { theme, author, content: postContent, metrics, images, timestamp } = store
+    // Use explicit props when provided (storyboard / multi-instance), else fall back to the store.
+    const className = props.className ?? ''
+    const theme = props.theme ?? (mounted ? store.theme : 'light')
+    const author = props.author ?? (mounted ? store.author : DEFAULT_AUTHOR)
+    const postContent = props.content ?? (mounted ? store.content : '')
+    const metrics = props.metrics ?? (mounted ? store.metrics : DEFAULT_METRICS)
+    const images = props.images ?? (mounted ? store.images : [])
+    const timestamp = props.timestamp ?? (mounted ? store.timestamp : new Date())
 
     // Instagram theme colors - Instagram primarily uses white/black
     const themeColors = theme === 'dark'

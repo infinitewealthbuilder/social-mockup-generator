@@ -72,8 +72,9 @@ export const useStoryboardStore = create<StoryboardState>()(
         set({ posts: seed(), selectedId: Q1031_JUNE_FACEBOOK[0]?.id ?? null, lastSavedAt: stamp() }),
     }),
     {
-      name: 'q1031-june-fb-storyboard-v1',
-      version: 1,
+      // v2: specialist-recrafted copy (paragraph breaks). Key bump = returning users load the new seed fresh.
+      name: 'q1031-june-fb-storyboard-v2',
+      version: 2,
       // Only persist the editable data, not transient selection.
       partialize: (s) => ({ posts: s.posts, lastSavedAt: s.lastSavedAt }),
       // Reconcile persisted edits against the current seed BY ID so that:

@@ -86,6 +86,10 @@ export interface FacebookPostProps {
   metrics?: PostMetrics
   images?: PostImage[]
   privacy?: 'public' | 'friends' | 'only_me'
+  /** Ad mode: show "Sponsored" instead of the timestamp/privacy row. */
+  sponsored?: boolean
+  /** Ad mode: link card (domain + headline + CTA button) rendered below the image. */
+  linkCard?: { domain: string; headline: string; description?: string; cta: string }
   editable?: boolean
   onContentChange?: (content: string) => void
   onAuthorChange?: (author: Partial<PostAuthor>) => void
@@ -135,6 +139,8 @@ export const FacebookPost = forwardRef<HTMLDivElement, FacebookPostProps>(
     const metrics = props.metrics ?? (mounted ? { ...store.metrics, reactions: store.metrics.reactions || defaultMetrics.reactions } : defaultMetrics)
     const images = props.images ?? (mounted ? store.images : defaultImages)
     const privacy = props.privacy ?? (mounted ? store.privacy : defaultPrivacy)
+    const sponsored = props.sponsored ?? false
+    const linkCard = props.linkCard
     const editable = props.editable ?? false
     const onContentChange = props.onContentChange
     const onAuthorChange = props.onAuthorChange
@@ -214,9 +220,19 @@ export const FacebookPost = forwardRef<HTMLDivElement, FacebookPostProps>(
                   )}
                 </div>
                 <div className="flex items-center text-[13px]" style={{ color: secondaryColor }}>
-                  <span>{formatDate(timestamp, 'facebook')}</span>
-                  <span className="mx-1">·</span>
-                  <PrivacyIcon />
+                  {sponsored ? (
+                    <>
+                      <span>Sponsored</span>
+                      <span className="mx-1">·</span>
+                      <PublicIcon color={secondaryColor} />
+                    </>
+                  ) : (
+                    <>
+                      <span>{formatDate(timestamp, 'facebook')}</span>
+                      <span className="mx-1">·</span>
+                      <PrivacyIcon />
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -287,6 +303,34 @@ export const FacebookPost = forwardRef<HTMLDivElement, FacebookPostProps>(
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {/* Ad link card (Sponsored CTA) */}
+        {linkCard && (
+          <div
+            className="flex items-center justify-between gap-3 px-4 py-3"
+            style={{ backgroundColor: isDark ? '#3a3b3c' : '#f7f8fa', borderTop: `1px solid ${borderColor}` }}
+          >
+            <div className="min-w-0">
+              <div className="text-[12px] uppercase tracking-wide truncate" style={{ color: secondaryColor }}>
+                {linkCard.domain}
+              </div>
+              <div className="text-[16px] font-bold leading-5 mt-0.5" style={{ color: textColor }}>
+                {linkCard.headline}
+              </div>
+              {linkCard.description && (
+                <div className="text-[13px] mt-0.5 truncate" style={{ color: secondaryColor }}>
+                  {linkCard.description}
+                </div>
+              )}
+            </div>
+            <button
+              className="flex-shrink-0 text-[14px] font-semibold rounded-md px-4 py-1.5"
+              style={{ backgroundColor: isDark ? '#4e4f50' : '#e2e5e9', color: textColor }}
+            >
+              {linkCard.cta}
+            </button>
           </div>
         )}
 
